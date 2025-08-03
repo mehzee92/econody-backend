@@ -2,43 +2,36 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 
+// const pool = mysql.createPool({
+//   host: 'localhost', 
+//   user: 'root',
+//   password: '',
+//   database: 'econody',
+//   connectionLimit: 5,
+// });
+
+
+const {
+  DB_NAME,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_USER
+} = process.env;
+
+if (!DB_NAME || !DB_PASSWORD || !DB_HOST || !DB_USER) {
+  console.error("Database configuration is missing in .env file");
+  process.exit(1);
+}
+
 const pool = mysql.createPool({
-  host: 'localhost', 
-  user: 'root',
-  password: '',
-  database: 'econody',
+  host: DB_HOST,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
   connectionLimit: 5,
 });
 
 
-// const {
-//   DB_NAME,
-//   DB_PASSWORD,
-//   DB_HOST,
-//   DB_USER
-// } = process.env;
-
-// if (!DB_NAME || !DB_PASSWORD || !DB_HOST || !DB_USER) {
-//   console.error("Database configuration is missing in .env file");
-//   process.exit(1);
-// }
-
-// const pool = mysql.createPool({
-//   host: DB_HOST,
-//   user: DB_USER,
-//   password: DB_PASSWORD,
-//   database: DB_NAME,
-//   connectionLimit: 5,
-// });
-
-
-// const pool = mysql.createPool({
-//   host: 'localhost', 
-//   user: 'charcoin_user',
-//   password: 'charcoin--pass',
-//   database: 'charcoin',
-//   connectionLimit: 5,
-// });
 
 
 async function update(sql, params) {
