@@ -28,23 +28,19 @@ var myVestings = require('./routes/my-vesting');
 // ALLOWED ORIGINS FOR CORS
 const allowedOrigins = [
   'http://localhost:3000',
-  'http://localhost:3001',
-  'http://localhost:3002',
-  'http://localhost:3003',
-  'http://localhost:3004',
-  'http://localhost:3005',
-  'http://localhost:3006',
-  'http://localhost:3007',
-  'http://localhost:3008',
+  'http://localhost:4000',
+  'http://localhost:5000',
+  'http://localhost:6000',
+  'http://localhost:7000',
+  'http://localhost:8000',
+  'http://localhost:9000',
   'http://31.97.150.58:3000',
-  'http://31.97.150.58:3001',
-  'http://31.97.150.58:3002',
-  'http://31.97.150.58:3003',
-  'http://31.97.150.58:3004',
-  'http://31.97.150.58:3005',
-  'http://31.97.150.58:3006',
-  'http://31.97.150.58:3007',
-  'http://31.97.150.58:3008',
+  'http://31.97.150.58:4000',
+  'http://31.97.150.58:5000',
+  'http://31.97.150.58:6000',
+  'http://31.97.150.58:7000',
+  'http://31.97.150.58:8000',
+  'http://31.97.150.58:9000'
 ];
 
 const corsOptions = {
