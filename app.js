@@ -36,8 +36,15 @@ const allowedOrigins = [
   'http://localhost:3006',
   'http://localhost:3007',
   'http://localhost:3008',
-  'https://admin.charcoin.org',
-  'https://dapp.charcoin.org',
+  'http://31.97.150.58:3000',
+  'http://31.97.150.58:3001',
+  'http://31.97.150.58:3002',
+  'http://31.97.150.58:3003',
+  'http://31.97.150.58:3004',
+  'http://31.97.150.58:3005',
+  'http://31.97.150.58:3006',
+  'http://31.97.150.58:3007',
+  'http://31.97.150.58:3008',
 ];
 
 const corsOptions = {
