@@ -4,16 +4,22 @@ const authenticateToken = require("./../middlewares/auth");
 const myStakesModel = require("./../models/my-stakes");
 
 // GET all stakes (protected)
-router.get('/', authenticateToken, async function(req, res) {
-  const username = req.user?.username || "admin";
-  const myAssets = await myStakesModel.getMyAssets(username);
+// authenticateToken,
+router.get('/',  async function(req, res) {
+  const username = "admin";
+  const myAssets = await myStakesModel.getMyStakes(username);
   res.json(myAssets);
 });
+
+
+
+
+
 
 // Add new stake
 router.post('/add', authenticateToken, async function(req, res) {
   const username = req.user?.username || "admin";
-  const result = await myStakesModel.addMyAsset({ username, ...req.body });
+  const result = await myStakesModel.addMyStakes({ username, ...req.body });
   if (result.affectedRows === 1) {
     res.status(200).json({ status: "success", ...result });
   } else {

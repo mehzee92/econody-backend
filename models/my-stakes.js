@@ -145,10 +145,47 @@ const getMyStake = async (id) => {
 };
 
 
+const getMyStakes = async (username) => {
+  if (!username) {
+    return { success: false, message: 'Stake username is required' };
+  }
+
+  try {
+    const sql = `SELECT * FROM stakings WHERE username = '${username}'`;
+    const [result] = await query(sql);
+    console.log(result);
+    if (!result || result.length === 0) {
+      return { success: false, message: 'No stake found' };
+    }
+
+    const len = result.length;
+    for(var i=0; i<len; i++) {
+      try {
+          result[i].asset_metadata = JSON.parse(result[i].asset_metadata);
+      } 
+      catch(error) 
+      {
+         result[i].asset_metadata = {
+                                    name: "-",
+                                    thumbnail: "-",
+                                    category: "-"
+                                };
+
+      }  
+    }
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error fetching stake:', error);
+    return { success: false, error };
+  }
+};
+
+
 
 module.exports = { 
     addMyStake,
     updateMyStake,
     deleteMyStake,
-    getMyStake
+    getMyStake,
+     getMyStakes
 };

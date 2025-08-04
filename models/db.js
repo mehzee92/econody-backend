@@ -2,13 +2,7 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 
-// const pool = mysql.createPool({
-//   host: 'localhost', 
-//   user: 'root',
-//   password: '',
-//   database: 'econody',
-//   connectionLimit: 5,
-// });
+
 
 
 const {
@@ -31,7 +25,13 @@ const pool = mysql.createPool({
   connectionLimit: 5,
 });
 
-
+// const pool = mysql.createPool({
+//   host: 'localhost', 
+//   user: 'root',
+//   password: '',
+//   database: 'econody',
+//   connectionLimit: 5,
+// });
 
 
 async function update(sql, params) {

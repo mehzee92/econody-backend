@@ -174,7 +174,7 @@ const getMyVestings = async (username) => {
           rows[i].asset_metadata = JSON.parse(rows[i].asset_metadata);
         } catch(error) 
         {
-          rows[i].asset_metadata = {name:"", thumbnail:"", category:""}
+          rows[i].asset_metadata = {name:"-", thumbnail:"-", category:"-"}
         }
         
     }
