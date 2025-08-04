@@ -25,6 +25,8 @@ router.get('/:id', /* authenticateToken, */ async function (req, res) {
     }
 });
 
+
+
 // Add a new image
 router.post('/add', /* authenticateToken, */ async function (req, res) {
     try {
