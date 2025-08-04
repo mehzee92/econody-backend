@@ -1,78 +1,61 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var router = express.Router();
 const authenticateToken = require("./../middlewares/auth");
-const galleryModel = require("./../models/galleryModel");
+const myAssetsModel = require("./../models/my-assets");
 
-// Get all images by asset_id
-router.get('/asset/:asset_id', /* authenticateToken, */ async function (req, res) {
-    try {
-        const asset_id = parseInt(req.params.asset_id);
-        const images = await galleryModel.getGalleryByAsset(asset_id);
-        res.json({ status: "success", data: images });
-    } catch (error) {
-        res.status(500).json({ status: "error", message: "Server error", error });
-    }
-});
 
-// Get a single image by id
-router.get('/:id', /* authenticateToken, */ async function (req, res) {
-    try {
-        const id = parseInt(req.params.id);
-        const image = await galleryModel.getGalleryImageById(id);
-        res.json(image);
-    } catch (error) {
-        res.status(500).json({ status: "error", message: "Server error", error });
-    }
+//authenticateToken
+router.get('/', async function(req, res) {
+  const username = "admin"
+  const myAssets = await myAssetsModel.getMyAssets(username);
+    res.json(myAssets);
 });
 
 
-
-// Add a new image
-router.post('/add', /* authenticateToken, */ async function (req, res) {
-    try {
-        const { asset_id, image_url } = req.body;
-        const result = await galleryModel.addGalleryImage({ asset_id, image_url });
-
-        if (result.success) {
-            res.status(200).json({ status: "success", ...result });
-        } else {
-            res.status(400).json({ status: "error", ...result });
-        }
-    } catch (error) {
-        res.status(500).json({ status: "error", message: "Server error", error });
-    }
+//authenticateToken,
+router.post('/add',  async function(req, res) {
+  const user =  'admin'; //req?.user;
+  const result = await myAssetsModel.addMyAsset({...user, ...req.body});
+  if(result.affectedRows==1) {
+      res.status(200).json({status:"success", ...result});
+  } else {
+     res.status(200).json({status:"error", ...result});
+  }
 });
 
-// Update image by id
-router.post('/update', /* authenticateToken, */ async function (req, res) {
-    try {
-        const { id, ...updates } = req.body;
-        const result = await galleryModel.updateGalleryImage(id, updates);
-
-        if (result.success) {
-            res.status(200).json({ status: "success", ...result });
-        } else {
-            res.status(400).json({ status: "error", ...result });
-        }
-    } catch (error) {
-        res.status(500).json({ status: "error", message: "Server error", error });
-    }
+//authenticateToken,
+router.post('/update',  async function(req, res) {
+  const user = 'admin'; //req?.user;
+  const result = await myAssetsModel.updateMyAsset(req.body.id, {...req.body, ...user});
+  if(result.affectedRows==1) {
+      res.status(200).json({status:"success", ...result});
+  } else {
+     res.status(200).json({status:"error", ...result});
+  }
 });
 
-// Soft-delete (deactivate) an image
-router.post('/delete', /* authenticateToken, */ async function (req, res) {
-    try {
-        const { id } = req.body;
-        const result = await galleryModel.deleteGalleryImage(id);
 
-        if (result.success) {
-            res.status(200).json({ status: "success", ...result });
-        } else {
-            res.status(400).json({ status: "error", ...result });
-        }
-    } catch (error) {
-        res.status(500).json({ status: "error", message: "Server error", error });
-    }
+// authenticateToken,
+router.post('/delete',  async function(req, res) {
+  const user =  "admin"; //req?.user;
+  const result = await myAssetsModel.deleteAsset(req.body.id, user);
+  if(result.affectedRows==1) {
+      res.status(200).json({status:"success", ...result});
+  } else {
+     res.status(200).json({status:"error", ...result});
+  }
 });
+
+
+router.get('/:id',  authenticateToken,  async function(req, res) {
+  const causes = await myAssetsModel.getCause(req.params.id);
+  res.json(causes);
+});
+
+
 
 module.exports = router;
+
+
+
+
